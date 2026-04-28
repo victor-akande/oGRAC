@@ -34,9 +34,56 @@ For a more detailed introduction to oGRAC architecture, please refer to [Archite
 
 ## Compilation Guide
 
-1. Initialize compilation environment
+1. Login to the Server
 
-    Run the interactive initializer from the repository root:
+    Log in to the server where you want to perform the installation.
+
+2. Create Installation Directory
+
+    Create a directory in `/opt/oGRAC` with the `-p` flag:
+
+    ```shell
+    mkdir -p /opt/oGRAC
+    ```
+
+3. Set Directory Permissions
+
+    Change the permissions recursively on the directory:
+
+    ```shell
+    chmod 755 -R /opt/oGRAC
+    cd /opt/oGRAC
+    ```
+
+4. Install Git
+
+    Install git on your system:
+
+    ```shell
+    yum install -y git
+    ```
+
+5. Clone the Repository
+
+    Clone the oGRAC repository:
+
+    ```shell
+    git clone https://github.com/victor-akande/oGRAC.git
+    ```
+
+6. Enter the Directory
+
+    ```shell
+    cd oGRAC
+    ```
+
+7. Initialize Compilation Environment
+
+    You have two options:
+
+    **Option A: Interactive Initializer**
+    
+    Run the interactive initializer script:
 
     ```shell
     bash init.sh
@@ -48,30 +95,24 @@ For a more detailed introduction to oGRAC architecture, please refer to [Archite
     - create the compilation user and set its password
     - install necessary dependencies
 
+    **Option B: Full Compilation and Installation**
+    
     Alternatively, to perform the full compilation and installation flow in one step, run:
 
     ```shell
     bash full_build_install.sh
     ```
 
-2. Obtain Source Code
+8. Configuration Modification (Optional)
 
-    ```shell
-    chmod 755 -R compile_path
-    cd compile_path
-    git clone https://gitcode.com/victor-akande/oGRAC.git
-    ```
-
-5. Configuration Modification
-
-    If need to disable protect virtual memory option (if compiling debug version, suggest disabling protect virtual memory option):
+    If you need to disable the protect virtual memory option (especially for debug version compilation):
     
     ```shell
     cd oGRAC/build
     sed -i 's/DUSE_PROTECT_VM=ON/DUSE_PROTECT_VM=OFF/g' Makefile.sh
     ```
 
-6. Compile
+9. Compile
 
     ```shell
     cd build
@@ -81,9 +122,13 @@ For a more detailed introduction to oGRAC architecture, please refer to [Archite
     
     - `-b, --build_type=<type>`: Specify compile type (release/debug, default release)
 
-7. Output Directory
+10. Output Directory
 
     Output package located at: `oGRAC/oGRAC-DATABASE-*-64bit`
+
+11. Switch to Database Admin User and Follow QUICKSTART Guide
+
+    Once the installation is complete, switch to the database admin user and follow the [QUICKSTART Guide](./QUICKSTART.md) for next steps.
 
 ## Containerized Installation Guide
 

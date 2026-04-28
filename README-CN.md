@@ -34,9 +34,62 @@ oGRAC主要由五个主要部分组成：
 
 ## 编译指南
 
-1. 初始化编译环境
+1. 登录服务器
 
-    在仓库根目录运行交互式初始化脚本：
+    登录到要执行安装的服务器。
+
+2. 创建安装目录
+
+    在 `/opt/oGRAC` 中创建目录，使用 `-R` 标志：
+
+    ```shell
+    mkdir -p /opt/oGRAC
+    ```
+
+3. 设置目录权限
+
+    递归更改目录权限：
+
+    ```shell
+    chmod 755 -R /opt/oGRAC
+    cd /opt/oGRAC
+    ```
+
+4. 安装 Git
+
+    在系统上安装 git：
+
+    ```shell
+    yum install -y git
+    ```
+    
+    或对于基于 Debian 的系统：
+    
+    ```shell
+    apt-get install -y git
+    ```
+
+5. 克隆仓库
+
+    克隆 oGRAC 仓库：
+
+    ```shell
+    git clone https://github.com/victor-akande/oGRAC.git
+    ```
+
+6. 进入目录
+
+    ```shell
+    cd oGRAC
+    ```
+
+7. 初始化编译环境
+
+    您有两个选项：
+
+    **选项 A：交互式初始化脚本**
+    
+    运行交互式初始化脚本：
 
     ```shell
     bash init.sh
@@ -48,30 +101,24 @@ oGRAC主要由五个主要部分组成：
     - 创建编译用户并设置密码
     - 安装必要的依赖
 
+    **选项 B：完整编译和安装**
+    
     或者直接执行完整的编译与安装流程：
 
     ```shell
     bash full_build_install.sh
     ```
 
-2. 获取源码
+8. 配置修改（可选）
 
-    ```shell
-    chmod 755 -R compile_path
-    cd compile_path
-    git clone https://gitcode.com/opengauss/oGRAC.git
-    ```
-
-5. 配置修改
-
-    如需关闭保护虚拟内存选项(如果编译安装的是debug版本建议关闭保护虚拟内存选项)：
+    如需关闭保护虚拟内存选项（特别是在编译调试版本时）：
     
     ```shell
     cd oGRAC/build
     sed -i 's/DUSE_PROTECT_VM=ON/DUSE_PROTECT_VM=OFF/g' Makefile.sh
     ```
 
-6. 编译
+9. 编译
 
     ```shell
     cd build
@@ -81,9 +128,13 @@ oGRAC主要由五个主要部分组成：
     
     - `-b, --build_type=<type>`：指定编译类型（release/debug，默认release）
 
-7. 生成目录
+10. 生成目录
 
     输出包位于：`oGRAC/oGRAC-DATABASE-*-64bit`
+
+11. 切换到数据库管理员用户并按照快速入门指南
+
+    安装完成后，切换到数据库管理员用户并按照[快速入门指南](./QUICKSTART.md)进行后续步骤。
 
 ## 容器化安装指南
 
