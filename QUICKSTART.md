@@ -109,9 +109,9 @@ SELECT INSTANCE_NAME, HOST_NAME, VERSION, STATUS FROM DV_INSTANCE;
 oGRAC manages parameters using the standard `SHOW` command.
 
 ```sql
--- Show a specific parameter (e.g., Listener IP or Port)
-SHOW lsnr_addr;
-SHOW lsnr_port;
+-- Show a specific parameter 
+SHOW PARAMETER LSNR;
+SHOW PARAMETER INTERCONNECT;
 
 -- View ALL active parameters
 SHOW ALL;
@@ -149,8 +149,10 @@ SELECT * FROM DV_LOG_FILES;
 ### Creating a Test User and Database
 
 ```sql
--- Create a test user
-CREATE USER test_user IDENTIFIED BY 'password123';
+-- Create a test user with a compliant password
+CREATE USER test_user IDENTIFIED BY 'SecurePass123!';
+
+-- Grant necessary privileges
 GRANT CONNECT, RESOURCE TO test_user;
 
 -- Create a test table
