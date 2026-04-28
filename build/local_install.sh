@@ -64,7 +64,18 @@ function install() {
         exit 1
     fi
 
-    cd ${CODE_PATH}/oGRAC-DATABASE-*-64bit || exit 1
+    # Find the database package directory
+    # Look for directories matching the pattern, prefer the most recent one
+    local pkg_dir
+    pkg_dir=$(find "${CODE_PATH}" -maxdepth 1 -type d -name "oGRAC-DATABASE-*-64bit" -printf '%T@ %p\n' 2>/dev/null | sort -n | tail -1 | cut -d' ' -f2-)
+    
+    if [[ -z "${pkg_dir}" ]]; then
+        echo "Error: No oGRAC-DATABASE-* directory found in ${CODE_PATH}"
+        exit 1
+    fi
+    
+    echo "Using package directory: ${pkg_dir}"
+    cd "${pkg_dir}" || exit 1
     mkdir -p /home/${USER}/logs
     run_mode=ogracd_in_cluster
     python3 install.py -U ${USER}:${USER} -R /home/${USER}/install \
